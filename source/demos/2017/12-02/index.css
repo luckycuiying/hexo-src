@@ -1,0 +1,13 @@
+.banner{
+    margin: 1000px auto;
+    width: 790px;
+    height: 340px;
+    border: 1px solid #000;
+    background:#f1f1f1 url("img/loading.gif") no-repeat center center;
+}
+.banner img{
+    // 在开始的时候img 的src 属性没有地址，这样的话在IE浏览器中的容器中会显示一张碎图，不美观，所以我们让其默认是隐藏的，当真实的图片加载完成后再显示
+    display: none; 
+    width:100%;
+    height:100%;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>规定时间的单方向匀速运动</title>
+    <link rel="stylesheet" type="text/css" href="../comment/rest.css">
+    <style>
+    .box{
+        position: absolute;
+        left: 0;
+        top:0;
+        width:100px;
+        height: 100px;
+        background: lightgreen;
+
+    }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <script type="text/javascript" src ="../comment/utils.js"></script>
+    <script>
+        var oBox = document.getElementById('box');
+        //实现一个匀速运动，在指定时间内完成动画： 
+        //计算出总距离/总时间，根据总距离和总时间求出对应的步长(每十秒走一步的话需要走多远)
+        //设置定时器，每个十秒走一步
+        var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+        var duration = 2000, step = (maxLeft/duration)*10;
+        // var timer =  window.setInterval(function(){
+        //     var curLeft = parseInt(utils.css(oBox,"left"));
+        //     if(curLeft>=maxLeft){
+        //         window.clearInterval(timer);
+        //         return;
+        //     }
+        //     curLeft +=step;
+        //     utils.css(oBox,"left", curLeft);
+        // },10)
+        // 第二种思想实现一个匀速运动，在指定时间内完成的动画： 自己写一个动画公式，根据当前走的时间t ,
+        // 总时间d ,起始位置b， 总距离C ,计算出来我们当前元素应该在的位置，让当前的元素运动到这个位置即可
+        function Liner(t,b,c,d){
+            return c * t/d +b
+        }
+        var target = utils.win('clientWidth') - oBox.offsetWidth,
+        begin = utils.css(oBox,"left"), change = target - begin;
+        var time = null,duration =2000;
+        var timer = window.setInterval(function(){
+            time +=10;
+            if(time>duration){
+                utils.css(oBox,"left",target);
+                window.clearInterval(timer);
+                return;
+            }
+            var curPos = Liner(time,begin,change,duration);
+            utils.css(oBox,"left",curPos);
+        },10);
+    </script>
+</body>
+</html>

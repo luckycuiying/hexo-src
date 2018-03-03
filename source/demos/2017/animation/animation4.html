@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现反弹动画</title>
+    <link rel="stylesheet" type="text/css" href="../comment/rest.css">
+    <style>
+    .box{
+        position: absolute;
+        left: 500px;
+        top:0;
+        width:100px;
+        height: 100px;
+        background: lightgreen;
+
+    }
+    .btn{
+        width: 210px;
+        margin: 400px auto;
+    }
+    .btn input{
+        display: inline-block;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border: 1px solid green;
+        cursor: pointer;
+        background: #999;
+        color: #fff
+    }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <div class="btn">
+        <input id="left-btn" type="button" value="向左">
+        <input id="right-btn" type="button" value="向右">
+    </div>
+    <script type="text/javascript" src ="../comment/utils.js"></script>
+    <script>
+        var oBox = document.getElementById('box');
+        var leftLeft = document.getElementById('left-btn');
+        var rightBtn = document.getElementById('right-btn');
+        var maxValue = utils.win('clientWidth') - oBox.offsetWidth;
+        var minValue = 0;
+        var step = 5;
+        var timer = null;
+        function move(target){ //target:目标值。
+            window.clearTimeout(timer)
+            var curLeft = utils.css(oBox,"left");
+            if(curLeft<target){
+                if(curLeft+step>=target){
+                    utils.css(oBox,"left", target)
+
+                    return
+                }
+                curLeft+=step;
+                utils.css(oBox,"left", curLeft)
+            }else if(curLeft>target){
+                if(curLeft-step<=target){
+                    utils.css(oBox,"left",target)
+                    return;
+                }
+                curLeft -= step;
+                utils.css(oBox,"left",curLeft);
+            } else{
+                return;
+            }
+            //这样写性能不好，每一次到达时间的时候都要执行一个匿名函数(形成一个私有的作用域)，在匿名函数中执行move,但是move中需要用到的一个数据值，是在第一次执行move方法中，需要把匿名函数形成的私有作用域作为跳板找到之前的。这样就导致了匿名函数形成的的之个私有作用域不能销毁。
+            timer = window.setTimeout(function(){
+                move(target)
+            },10);
+        }
+      leftLeft.onclick = function(){
+        move(minValue)
+      }
+      rightBtn.onclick = function(){
+        move(maxValue)
+      }
+        
+    </script>
+</body>
+</html>

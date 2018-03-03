@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现反弹动画优化</title>
+    <link rel="stylesheet" type="text/css" href="../comment/rest.css">
+    <style>
+    .box{
+        position: absolute;
+        left: 500px;
+        top:0;
+        width:100px;
+        height: 100px;
+        background: lightgreen;
+
+    }
+    .btn{
+        width: 210px;
+        margin: 400px auto;
+    }
+    .btn input{
+        display: inline-block;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        border: 1px solid green;
+        cursor: pointer;
+        background: #999;
+        color: #fff
+    }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <div class="btn">
+        <input id="left-btn" type="button" value="向左">
+        <input id="right-btn" type="button" value="向右">
+    </div>
+    <script type="text/javascript" src ="../comment/utils.js"></script>
+    <script>
+        var oBox = document.getElementById('box');
+        var leftLeft = document.getElementById('left-btn');
+        var rightBtn = document.getElementById('right-btn');
+        var maxValue = utils.win('clientWidth') - oBox.offsetWidth;
+        var minValue = 0;
+        var step = 5;
+        //为了当前的元素在同一个时间只运行一个动画（下一个动画开始的时候首先把上一个动画的定时器清除掉）:
+        //保证当前元素所有动画接受定时器返回值的那个变量需要共享
+        //解决方案： 把这个值放在当前元素的自定义属性上
+        // var timer = null;
+        function move(target){ //target:目标值。
+            _move();
+            function _move(){
+                window.clearTimeout(oBox.timer)
+                var curLeft = utils.css(oBox,"left");
+                if(curLeft<target){
+                    if(curLeft+step>=target){
+                        utils.css(oBox,"left", target)
+
+                        return
+                    }
+                    curLeft+=step;
+                    utils.css(oBox,"left", curLeft)
+                }else if(curLeft>target){
+                    if(curLeft-step<=target){
+                        utils.css(oBox,"left",target)
+                        return;
+                    }
+                    curLeft -= step;
+                    utils.css(oBox,"left",curLeft);
+                } else{
+                    return;
+                }
+            oBox.timer = window.setTimeout(_move,10);
+            }
+           
+        }
+      leftLeft.onclick = function(){
+        move(minValue)
+      }
+      rightBtn.onclick = function(){
+        move(maxValue)
+      }
+        
+    </script>
+</body>
+</html>

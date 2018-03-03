@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>规定时间内多方向运动动画</title>
+    <link rel="stylesheet" type="text/css" href="../comment/rest.css">
+    <style>
+    .box{
+        position: absolute;
+        left: 0;
+        top:0;
+        width:100px;
+        height: 100px;
+        background: lightgreen;
+        opacity: 1;
+        filter:alpha(opacity =0);
+    }
+  
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <script type="text/javascript" src ="../comment/utils.js"></script>
+    <script type="text/javascript" src ="../comment/tween.js"></script>
+    <script>
+        function Linear(t,b,c,d){
+            return c * t / d +b;
+        }
+        var oBox = document.getElementById('box');
+        myAnimate(oBox,{
+            left:1000,
+            top:500,
+            opacity:0,
+            height:0,
+            width:0
+        },1000)
+        // var beginLeft = utils.css(oBox,"left"),beginTop = utils.css(oBox,"top");
+        // var targetLeft = 1000, targetTop = 500;
+        // var changeLeft = targetLeft - beginLeft,changeTop = targetTop - beginTop;
+        // var duration = 1000, time =0;
+        // oBox.timer = window.setInterval(function(){
+        //     time += 10;
+        //     if(time>=duration){
+        //         utils.css(oBox,{
+        //             left:targetLeft,
+        //             top:targetTop
+        //         });
+        //         window.clearInterval(oBox.timer);
+        //         return;
+        //     }
+        //     var curLeft = Linear(time,beginLeft,changeLeft,duration);
+        //     var curTop = Linear(time,beginTop,changeTop,duration);
+        //     utils.css(oBox,{
+        //         left:curLeft,
+        //         top:curTop
+        //     })
+        // },10);
+    </script>
+</body>
+</html>

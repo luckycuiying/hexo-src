@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>规定步长的单方向匀速运动</title>
+    <link rel="stylesheet" type="text/css" href="../comment/rest.css">
+    <style>
+    .box{
+        position: absolute;
+        left: 0;
+        top:0;
+        width:100px;
+        height: 100px;
+        background: lightgreen;
+
+    }
+    </style>
+</head>
+<body>
+    <div class="box" id="box"></div>
+    <script type="text/javascript" src ="../comment/utils.js"></script>
+    <script>
+        var oBox = document.getElementById('box');
+        //实现一个匀速运动，在指定步长内完成动画： 
+        //问题：总距离/我们的步长 = 不是一个整数的话，就会出现滚动条或是少走一步现象。
+        //
+        var maxLeft = utils.win('clientWidth') - oBox.offsetWidth;
+        var step = 5;
+        var timer= window.setInterval(function(){
+            var curLeft = utils.css(oBox,"left");
+            //如果等于最大值的话就会在第一次运行滚动条后退一步/或超出一步。
+            //在进行边界判断的时候加上步长来处理: 当前边界+ 步长
+            if(curLeft+step>=maxLeft){
+                window.clearInterval(timer);
+                return;
+            }
+            curLeft += step;
+            utils.css(oBox,"left", curLeft);
+        })
+        
+    </script>
+</body>
+</html>
