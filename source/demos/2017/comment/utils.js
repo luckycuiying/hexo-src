@@ -185,18 +185,7 @@ var utils = (function(){
             }
             oldEle.parentNode.appendChild(newEle);
         },
-        // addClass : 增加样式类名
-        addClass: function(curEle,className){
-            // className 的值 包含多个样式值，先把传递进来的样式类名的首位空格去掉，然后在按照中间的空格拆分成数组中的每一项，
-            var ary = className.replace(/(^ +| +$)/g," ").split(/ +/g);
-            // 循环数组，一项一项进行验证即可
-            for (var i = 0;i<ary.length;i++) {
-                var curName =  ary[i];
-                if(!this.hasClass(curEle,curName)){
-                    curEle.className = " "+curName;
-                }
-            }   
-        },
+       
         // remveClass : 删除样式类名
         removeClass:function(curEle,className){
             var ary = className.replace(/(^ +| +$)/g," ").split(/ +/g);
