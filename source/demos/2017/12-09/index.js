@@ -51,7 +51,7 @@ function imgDelayLoad(curImg){ //??这个函数要被用多少次，jsonData.len
         return;
     }
     var tempImg = new Image();
-    tempImg.src = curImg.getAttribute('trueSrc'); //临时的图片就去加载真是的图片资源了
+    tempImg.src = curImg.getAttribute('tureImg'); //临时的图片就去加载真是的图片资源了
     tempImg.onload = function (){
         curImg.src = this.src; //说明已经加载成功了，我们这个图片的资源路径是有效的。
         curImg.style.display = 'block';
@@ -63,19 +63,18 @@ function imgDelayLoad(curImg){ //??这个函数要被用多少次，jsonData.len
 //多张图片延迟加载
 // 首先获取我们所有的图片集合
 function allImgDelay(){
-    for(var i=0; i<imgList.length; i++){
-        //给每一个图片延迟加载
+    for (var i = 0; i < imgList.length; i++) {
         var curImg = imgList[i];
         if (curImg.isLoad) continue; //优化 曾经加载过的图片就不需要再延迟加载了
-        var browerBottomDisBodyTop = utils.win('clientHeight') + utils.win('scrollTop'); //浏览器底部距离body顶端
+         var browerBottomDisBodyTop = utils.win('clientHeight') + utils.win('scrollTop'); //浏览器底部距离body顶端
         var imgParentBottomDisBodyTop = utils.offset(curImg.parentNode).top + curImg.parentNode.offsetHeight;  //图片父亲容器底部距离body顶端
-        if(browerBottomDisBodyTop>imgParentBottomDisBodyTop){ //判断这个图片是否已经出现在了浏览器的可视窗口内, 我们要判断img这个图片的parentNode
+        if(browerBottomDisBodyTop > imgParentBottomDisBodyTop){ //判断这个图片是否已经出现在了浏览器的可视窗口内, 我们要判断img这个图片的parentNode
             imgDelayLoad(curImg); //分别多次调用单个图片延迟加载
             fadeIn(curImg); //淡入的方式
         }
     }
 }
-window.setTimeout(allImgDelay,1000); //第一屏图片延迟加载,第一屏已经完全出现在可视窗口内，所以就需要图片延迟加载
+window.setTimeout(allImgDelay,1000);
 window.onscroll = allImgDelay; //滚轮的时候也需要图片延迟加载
 //处理多张
 function fadeIn(curImg){ //淡入
